@@ -1,7 +1,13 @@
+import sys
+
 try:
     from distutils.version import StrictVersion
-except:
-    print(f"[ComfyUI-Manager]  'distutils' package not found. Activating fallback mode for compatibility.")
+except ImportError:
+    if sys.version_info >= (3, 12):
+        print("[ComfyUI-Manager] 'distutils' package not found. Please install setuptools for Python 3.12+.")
+    else:
+        print("[ComfyUI-Manager] 'distutils' package not found. Activating fallback mode for compatibility.")
+
     class StrictVersion:
         def __init__(self, version_string):
             self.version_string = version_string
@@ -15,11 +21,9 @@ except:
             parts = self.version_string.split('.')
             if not parts:
                 raise ValueError("Version string must not be empty")
-
             self.major = int(parts[0])
             self.minor = int(parts[1]) if len(parts) > 1 else 0
             self.patch = int(parts[2]) if len(parts) > 2 else 0
-
             # Handling pre-release versions if present
             if len(parts) > 3:
                 self.pre_release = parts[3]
@@ -60,4 +64,3 @@ except:
 
         def __ne__(self, other):
             return not self == other
-
