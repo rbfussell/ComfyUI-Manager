@@ -4,7 +4,7 @@ try:
     from distutils.version import StrictVersion
 except ImportError:
     if sys.version_info >= (3, 12):
-        print("[ComfyUI-Manager] 'distutils' package not found. Please install setuptools for Python 3.12+.")
+        print("[ComfyUI-Manager] 'distutils' package not found. Please install setuptools for Python 3.12+ to get rid of this error. Activating fallback mode for compatibility")
     else:
         print("[ComfyUI-Manager] 'distutils' package not found. Activating fallback mode for compatibility.")
 
